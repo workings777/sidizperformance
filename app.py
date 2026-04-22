@@ -425,6 +425,7 @@ HTML = """<!DOCTYPE html>
 
   <!-- 카테고리실적 -->
   <div id="sec-cat-perf" class="section active">
+    <div id="cat-perf-legend" style="background:white;border-radius:10px;padding:12px 20px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,0.1);"></div>
     <div class="chart-wrap"><canvas id="cat-perf-chart"></canvas></div>
   </div>
 
@@ -1612,7 +1613,7 @@ function renderCategoryPerf() {
       responsive: true,
       interaction: { mode: 'index', intersect: false },
       plugins: {
-        legend: { position: 'top' },
+        legend: { display: false },
         datalabels: { display: true },
         tooltip: {
           callbacks: {
@@ -1635,6 +1636,44 @@ function renderCategoryPerf() {
     },
     plugins: [ChartDataLabels]
   });
+
+  // 커스텀 범례 렌더링
+  const cats = strategyData.categories;
+  const legendEl = document.getElementById('cat-perf-legend');
+  const rowStyle = 'display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:6px;';
+  const itemStyle = (color, hidden) =>
+    `display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;opacity:${hidden?0.4:1}`;
+
+  const makeRow = (label, items) => `
+    <div style="font-size:11px;color:#999;margin-bottom:4px;">${label}</div>
+    <div style="${rowStyle}">${items}</div>`;
+
+  const amtItems = cats.map((cat, ci) => {
+    const color = STRATEGY_COLORS[ci % STRATEGY_COLORS.length];
+    const idx   = ci * 2;
+    const hidden = catPerfChart.getDatasetMeta(idx).hidden;
+    return `<span style="${itemStyle(color, hidden)}" onclick="toggleCatPerfDataset(${idx}, this)">
+      <span style="display:inline-block;width:24px;height:3px;background:${color};border-radius:2px;"></span>${cat}
+    </span>`;
+  }).join('');
+
+  const trendItems = cats.map((cat, ci) => {
+    const color = STRATEGY_COLORS[ci % STRATEGY_COLORS.length] + '4D';
+    const idx   = ci * 2 + 1;
+    const hidden = catPerfChart.getDatasetMeta(idx).hidden;
+    return `<span style="${itemStyle(color, hidden)}" onclick="toggleCatPerfDataset(${idx}, this)">
+      <span style="display:inline-block;width:24px;height:2px;background:${STRATEGY_COLORS[ci%STRATEGY_COLORS.length]};opacity:0.3;border-top:2px dashed ${STRATEGY_COLORS[ci%STRATEGY_COLORS.length]};"></span>${cat} 추세
+    </span>`;
+  }).join('');
+
+  legendEl.innerHTML = makeRow('금액', amtItems) + makeRow('추세선', trendItems);
+}
+
+function toggleCatPerfDataset(idx, el) {
+  const meta = catPerfChart.getDatasetMeta(idx);
+  meta.hidden = !meta.hidden;
+  el.style.opacity = meta.hidden ? '0.4' : '1';
+  catPerfChart.update();
 }
 
 loadAll();
