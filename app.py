@@ -346,10 +346,10 @@ HTML = """<!DOCTYPE html>
 <div class="container">
 
   <div class="radio-tabs">
-    <input type="radio" name="dash" id="r-strategy" checked onchange="switchDash('strategy')">
-    <label for="r-strategy">사업부 실적</label>
-    <input type="radio" name="dash" id="r-cat-perf" onchange="switchDash('cat-perf')">
+    <input type="radio" name="dash" id="r-cat-perf" checked onchange="switchDash('cat-perf')">
     <label for="r-cat-perf">카테고리실적</label>
+    <input type="radio" name="dash" id="r-strategy" onchange="switchDash('strategy')">
+    <label for="r-strategy">사업부 실적</label>
     <input type="radio" name="dash" id="r-series-naver" onchange="switchDash('series-naver')">
     <label for="r-series-naver">시리즈별실적(네이버)</label>
     <input type="radio" name="dash" id="r-cvr" onchange="switchDash('cvr')">
@@ -409,7 +409,7 @@ HTML = """<!DOCTYPE html>
   </div>
 
   <!-- 사업부 실적 -->
-  <div id="sec-strategy" class="section active">
+  <div id="sec-strategy" class="section">
     <div class="sub-tabs" id="strategy-cat-tabs"></div>
     <div class="week-selector">
       <h3>시리즈 선택</h3>
@@ -424,7 +424,7 @@ HTML = """<!DOCTYPE html>
   </div>
 
   <!-- 카테고리실적 -->
-  <div id="sec-cat-perf" class="section">
+  <div id="sec-cat-perf" class="section active">
     <div class="chart-wrap"><canvas id="cat-perf-chart"></canvas></div>
   </div>
 
