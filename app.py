@@ -349,7 +349,7 @@ HTML = """<!DOCTYPE html>
     <input type="radio" name="dash" id="r-cat-perf" checked onchange="switchDash('cat-perf')">
     <label for="r-cat-perf">실적현황</label>
     <input type="radio" name="dash" id="r-strategy" onchange="switchDash('strategy')">
-    <label for="r-strategy">사업부 실적</label>
+    <label for="r-strategy">카테고리실적</label>
     <input type="radio" name="dash" id="r-series-naver" onchange="switchDash('series-naver')">
     <label for="r-series-naver">시리즈별실적(네이버)</label>
     <input type="radio" name="dash" id="r-cvr" onchange="switchDash('cvr')">
