@@ -289,7 +289,7 @@ HTML = """<!DOCTYPE html>
     box-shadow: 0 1px 4px rgba(0,0,0,0.1); width: fit-content;
   }
   .radio-tabs label {
-    padding: 12px 32px; cursor: pointer; font-size: 12pt; font-weight: bold;
+    padding: 12px 32px; cursor: pointer; font-size: 10pt; font-weight: bold;
     color: #888; border-right: 1px solid #eee; transition: all 0.15s;
   }
   .radio-tabs label:last-child { border-right: none; }
@@ -489,7 +489,7 @@ async function loadAll() {
     npsData       = await r6.json();
     seriesNaverData = await r7.json();
     strategyData  = await r8.json();
-    selectedNaverWeeks = new Set(seriesNaverData.slice(0, 2).map(w => w.week));
+    selectedNaverWeeks = new Set(seriesNaverData.slice(-2).map(w => w.week));
     renderSeriesNaverWeekSelector();
     renderSeriesNaver();
     renderCvr();
